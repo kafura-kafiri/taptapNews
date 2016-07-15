@@ -131,7 +131,7 @@ def logout(request): #  NOT TESTED
     #  return JsonResponse({'kire khar': 'kirr'})
     from django.contrib.auth import logout
     logout(request)
-    return JsonResponse({'error': 'کاربر خارج شد'})
+    return JsonResponse({'data': 'کاربر خارج شد'})
 
 
 @login_required

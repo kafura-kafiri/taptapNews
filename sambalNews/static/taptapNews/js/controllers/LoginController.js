@@ -1,6 +1,6 @@
 
 
- app.controller('LoginController', ['$scope','$http', function($scope,$http) {
+ app.controller('LoginController', ['$scope','$http', function($scope,$http,$window) {
           $scope.login = function (username,password) {
             var data = $.param(
                 {
@@ -15,11 +15,15 @@
                 headers : {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
-            }
+            };
 
               $http.post('/sambalNews/login/', data, config)
                 .success(function (data, status, headers, config) {
-                    $scope.ResponseDetails = data;
+                    if(data.indexOf("MainController")>-1){
+                        $scope.ResponseDetails = "http://127.0.0.1:8000/sambalNews/index";
+                    }
+                    else
+                        $scope.ResponseDetails = data;
             })
             .error(function (data, status, header, config) {
                 $scope.ResponseDetails = "Data: " + data +

@@ -12,7 +12,10 @@ html, body {
 .header img {
    display: inline-block;
 }
-
+.logout{
+    right: 0px;
+    top: 20px;
+}
 .header h1 {
    display: inline-block;
 }
