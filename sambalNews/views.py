@@ -18,9 +18,21 @@ from django.contrib import messages
 import json
 import re
 import hashlib
+import re
 
 from .models import *
 # Create your views here.
+
+def resign(dic):
+    new_dic = {}
+    for key in dic:
+        if 'data' in key:
+            if 'data' not in new_dic:
+                new_dic['data'] = {}
+            new_dic['data'][key[5:-1]] = dic[key]
+        else:
+            new_dic[key] = dic[key]
+    return new_dic
 
 @login_required
 @csrf_exempt
@@ -31,9 +43,10 @@ def index(request):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
-        if 'data' in request.POST:
-            data = request.POST['data']
-            data = json.loads(data)
+        post = resign(request.POST)
+        #  return JsonResponse({"error": post})
+        if 'data' in post:
+            data = post['data']
             if 'email' in data and 'username' in data and 'password' in data:
                 email = data['email']
                 username = data['username']
@@ -67,13 +80,13 @@ def signup(request):
     data = request.GET
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
-
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
-        if 'data' in request.POST:
-            data = request.POST['data']
-            data = json.loads(data)
+        post = resign(request.POST)
+        #  return JsonResponse({"error": post})
+        if 'data' in post:
+            data = post['data']
             is_user = False
             if 'password' in data:
                 password = data['password']
@@ -124,9 +137,10 @@ def logout(request): #  NOT TESTED
 def create_news(request):
     if request.method == 'POST':
 
-        if 'data' in request.POST:
-            data = request.POST['data']
-            data = json.loads(data)
+        post = resign(request.POST)
+        #  return JsonResponse({"error": post})
+        if 'data' in post:
+            data = post['data']
 
             if 'title' in data and 'source' in data and 'category' in data and 'tags' in data and 'summary' in data and 'text' in data:
                 title = data['title']
@@ -160,9 +174,10 @@ def add_comment(request, news_id):
         news = News.objects.get(id=news_id)
         # return JsonResponse({'news_info': news.summary.title})
         if request.method == 'POST':
-            if 'data' in request.POST:
-                data = request.POST['data']
-                data = json.loads(data)
+            post = resign(request.POST)
+            #  return JsonResponse({"error": post})
+            if 'data' in post:
+                data = post['data']
                 comment = Comment()
                 if 'like' in data:
                     comment.like = 1
@@ -206,9 +221,10 @@ def condid_search(date, cnt=10):
 @csrf_exempt
 def next(request):
     if request.method == 'POST':
-        if 'data' in request.POST:
-            data = request.POST['data']
-            data = json.loads(data)
+        post = resign(request.POST)
+        #  return JsonResponse({"error": post})
+        if 'data' in post:
+            data = post['data']
             if 'query' in data:
                 query = data['query']
                 date = datetime.datetime.now()
@@ -234,9 +250,10 @@ def add_hashtag(request):
     user = CustomUser.objects.get(user=user)
     #  return JsonResponse({'info': user.tags})
     if request.method == 'POST':
-        if 'data' in request.POST:
-            data = request.POST['data']
-            data = json.loads(data)
+        post = resign(request.POST)
+        #  return JsonResponse({"error": post})
+        if 'data' in post:
+            data = post['data']
             if 'tag' in data:
                 tag = data['tag']
                 if tag in user.tags:
