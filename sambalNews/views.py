@@ -22,8 +22,11 @@ import hashlib
 from .models import *
 # Create your views here.
 
+@login_required
+@csrf_exempt
 def index(request):
-    pass
+    return render(request, 'sambalNews/index.html', {})
+
 
 @csrf_exempt
 def signup(request):
@@ -103,6 +106,7 @@ def login(request):
                 return JsonResponse({'error': 'نام کاربری و ایمیل اشتباه است'})
             return JsonResponse({'error': 'رمز عبور خالی میباشد'})
         return JsonResponse({'error': 'صفت داده وجود ندارد'})
+    return render(request, 'sambalNews/login.html')
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
 
@@ -146,6 +150,7 @@ def create_news(request):
                 #  return JsonResponse({'error': str(news.id)})
                 return JsonResponse({'error': 'خبر افزوده شد'})
         return JsonResponse({'error': 'اطلاعات کافی نیست'})
+    return render(request, 'sambalNews/add_news.html', {})
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
 @login_required

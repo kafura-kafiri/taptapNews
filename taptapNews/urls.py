@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^sambalnews/', include('sambalNews.urls'))
+    url(r'^sambalnews/', include('sambalNews.urls')),
+    url(r'^accounts/', include('sambalNews.urls')),
 ]
