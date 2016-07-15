@@ -1,10 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-  news
-</body>
+<!doctype html>
+<html>
+  <head>
+    {% load staticfiles %}
+    <link href="{% static "/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "/css/css.css" %}" rel='stylesheet' type='text/css'>
+    <link href="{% static "/css/main.css" %}" rel="stylesheet" />
+
+    <script src="js/shared/angular.min.js"></script>
+  </head>
+  <body ng-app="myApp">
+  
+    <div class="header">
+      <div class="container">
+        <h1>Book End</h1>
+      </div>
+    </div>
+
+    <div class="main" ng-controller="MainController">
+      <div class="container">
+      
+        <div ng-repeat="product in products" class="col-md-6"> 
+  				<div class="thumbnail"> 
+    				<img ng-src="{{ product.cover }}"> 
+    				
+    				<p class="title">{{ product.name }}</p> 
+    				   				<div ng-app="">
+                                <p class="description">Click on the "show"-link to see the content.</p>
+                                <div class="wrapper">
+                                <p ng-hide="showme">It will appear here!</p>
+                                <p ng-show="showme" class="realtext">This is mah content, yo!</p>
+                                <button ng-click="showme=true">Show</button>
+                                <button ng-click="showme=false">Hide</button> 
+  
+                                </div>
+                                
+				    <p class="date">{{ product.pubdate | date }}</p> 
+				    <p class="source"><b>Source: </b>{{ product.source}}</p>
+				    <div class="rating">
+				    	<p class="likes" ng-click="plusOne($index)">+ {{ product.likes }} </p>
+				    	<p class="dislikes" ng-click="minusOne($index)">- {{ product.dislikes }} </p>
+				    </div>
+				    <p><b>Comments:</b></p>
+				    <div ng-repeat="comment in product.comments" > 
+						<div class="comment">
+						<p><b> {{comment.name}}</b></p>
+						<p class="commenttext"> {{comment.text}}</p>
+						</div>
+					</div> 
+					
+                                    <div class="commentbox">
+				    <input name="writecomment" id="writecomment" ng-model="newcomment">
+				    <button type="button" ng-click="sendComment($index)">Send comment</button>
+				    </div>
+					</div> 
+				</div>
+      </div>
+    </div>
+
+{% load staticfiles %}
+    <!-- Modules -->
+    <script src="{% static "/js/app.js" %}"></script>
+
+    <!-- Controllers -->
+    <script src="{% static "/js/controllers/MainController.js" %}"></script>
+    <script src="{% static "/js/controllers/Popup.js" %}"></script>
+  </body>
 </html>

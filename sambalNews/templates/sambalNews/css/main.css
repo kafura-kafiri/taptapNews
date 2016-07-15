@@ -1,0 +1,223 @@
+html, body {
+ margin: 0;
+ padding: 0;
+ font-family: 'Roboto', sans-serif;
+ width:100%;
+}
+
+.header {
+ padding: 15px;
+}
+
+.header img {
+   display: inline-block;
+}
+
+.header h1 {
+   display: inline-block;
+}
+
+.main {
+ background-color: #f2f2f2 ;
+ padding: 40px 0;
+}
+
+.comment {
+ background-color: #c4f1ff;
+ padding: 1px 20px 3px 3px;
+ border-style: dotted;
+ width: -webkit-fit-content;
+height: -webkit-fit-content;
+width: -moz-fit-content;
+height: -moz-fit-content;
+}
+
+.commenttext {
+ padding: 0px 0px 0px 15px;
+}
+
+.commentbox {
+ padding: 10px 10px 10px 10px;
+}
+
+.main h1 {
+ color: #F65A5B ;
+ font-size: 64px;
+ margin: 0 0 80px 0;
+ padding: 20px 0;
+   line-height: 60px;
+   width: 50%;
+}
+
+.main h2 {
+ background-color: #DDDDDD ;
+ color: #999999 ;
+ font-size: 20px;
+ margin: 0 0 40px 0;
+ padding: 20px 0;
+}
+.realtext{
+    font-size:24px
+}
+.thumbnail {
+ border: 0px;
+ position: relative;
+ padding: 50px;
+   border-radius: 0;
+   margin-bottom:50px;
+}
+
+.thumbnail img {
+   margin-top: 10px;
+ margin-bottom: 30px;
+ max-width: 100%;
+}
+
+.title,
+.date {
+ color: #444;
+ margin: 0;
+ font-size: 18px;
+   font-weight: 800;
+}
+
+.date {
+   color: #a3a3a3 ;
+   font-size: 14px;
+   font-weight: 200;
+}
+
+.price {
+ background-color: #39D1B4 ;
+ color: #fff;
+ font-size: 18px;
+   border-radius: 50%;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+   font-weight: 200;
+   height: 80px;
+   line-height: 80px;
+   text-align: center;
+   width: 80px;
+ position: absolute;
+ top: -40px;
+ right: 20px;
+}
+
+.rating {
+ text-align: right;
+ -webkit-user-select: none;
+    -moz-user-select: none;
+     -ms-user-select: none;
+ margin: 30px 0 -30px 20px;
+}
+
+.likes,
+.dislikes {
+   background: #F65A5B ;
+ color: #fff;
+ cursor: pointer;
+ display: inline-block;
+ font-size: 15px;
+   line-height: 40px;
+   min-width: 40px;
+   height: 40px;
+   border-radius: 50%;
+ margin: 0 -30px 0 40px;
+   text-align: center;
+   font-weight: 200;
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+   transition: background 500ms;
+}
+
+.likes:hover,
+.dislikes:hover {
+ color: #F65A5B ;
+   background: rgba(246, 90, 91, 0.25);
+   transition: background 500ms;
+}
+
+.footer {
+ text-align: center;
+ margin: 80px 0 110px;
+}
+.source{
+
+    font-size: 12px
+}
+
+.footer img {
+   margin: 0 10px;
+}
+.wrapper {
+  border: 1px dashed #95a5a6;
+  height: 56px;
+  margin-top: 16px;
+  border-radius: 4px;
+  position: relative;
+  font-size: 12px;
+  padding: 5px 5px 5px 5px;
+   width: -webkit-fit-content;
+height: -webkit-fit-content;
+width: -moz-fit-content;
+height: -moz-fit-content;
+}
+
+.wrapper p {
+  line-height: 31px;
+}
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px !important; /* Override the font-size specified earlier (36px) for all navigation links */
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .closebtn {
+        font-size: 40px !important;
+        top: 15px;
+        right: 35px;
+    }
+}

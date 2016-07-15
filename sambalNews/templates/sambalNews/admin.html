@@ -1,0 +1,78 @@
+ 
+<!doctype html>
+<html>
+  <head>
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/css.css" rel='stylesheet' type='text/css'>
+    <link href="css/main.css" rel="stylesheet" />
+
+    <script src="js/shared/angular.min.js"></script>
+  </head>
+  <body ng-app="myApp">
+  
+    <div class="header">
+      <div class="container">
+        <h1>KhabarKon Manager</h1>
+      </div>
+    </div>
+
+    <div class="main" ng-controller="AdminController">
+      <div class="container">
+                                    <div class="commentbox">
+                                    <h2>Add News:</h2>
+				      <form ng-submit="sendNews(id,title,date,image,source,tags,breif)">
+                                    <p>ID (Leave blank to add or Enter to Edit):
+                                        <input type="text" name="id" ng-model="id" /></p>
+				      <p>Title:
+                                        <input type="text" name="title" ng-model="title" /></p>
+                                        <p>Date:
+                                        <input type="date" name="date" ng-model="date" /></p>
+                                      <p>Image:
+                                        <input type="text" name="image" ng-model="image" />    </p>
+                                      <p>Source:
+                                        <input type="text" name="source" ng-model="source" /></p>
+                                      <p>Tags:
+                                        <input type="text" name="tags" ng-model="tags" /></p>
+                                      <p>Breif:
+                                        <input type="text" name="breif" ng-model="breif" /></p>
+                                        <br>
+                                        <input type="submit" value="Submit" />
+                                        </form>
+				    </div>
+                    
+
+                                <div ng-init="del=0">
+                                    <h2>Add or Edit Tags:</h2>
+				      <form ng-submit="sendTagInfo(name,oldname,del)">
+				      <p>Tag Name:
+                                        <input type="text" name="name" ng-model="name" /></p>
+				      <p ng-show="del == '0'">OLD Name (To Edit):
+                                        <input type="text" ng-show="del == '0'" name="name" ng-model="oldname" /></p>                                       
+                                        <label for="0">Add/Edit</label>
+                                        <input id="0" type="radio" name="del" checked ng-model="del" value="0">
+                                        <label for="other">Delete</label>
+                                        <input id="1" type="radio" name="del" ng-model="del" value="1">
+                                        <br>
+                                         <input type="submit" value="Submit" />
+                                        </form>
+				    </div>
+                
+                                    <div class="commentbox">
+                                    <h2>Block:</h2>
+				      <form ng-submit="block(username)">
+				      <p>Username:
+                                        <input type="text" name="username" ng-model="username" /></p>
+                                        <input type="submit" value="Submit" />
+                                        </form>
+				    </div>
+        
+      </div>
+    </div>
+
+
+    <!-- Modules -->
+    <script src="js/app.js"></script>
+    <!-- Controllers -->
+    <script src="js/controllers/AdminController.js"></script>
+  </body>
+</html>
