@@ -7,6 +7,7 @@
     <link href="{% static "taptapNews/css/css.css" %}" rel='stylesheet' type='text/css'>
     <link href="{% static "taptapNews/css/main.css" %}" rel="stylesheet" />
     <script src="{% static "taptapNews/js/shared/angular.min.js" %}" ></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   </head>
    {% verbatim %}
   <body ng-app="myApp">
@@ -31,7 +32,19 @@
                   <input type="submit" value="Submit" />
               </form>
           </div>
-
+          <br>
+          <div class="commentbox">
+              <h2>Sign Up:</h2>
+              <form ng-submit="signUp(username,password)">
+                  <p>Username:
+                      <input type="text" name="username" ng-model="username" /></p>
+                  <p>Password:
+                      <input type="password" name="password" ng-model="password" /></p>
+                  <p>Email:
+                      <input type="text" name="email" ng-model="email" /></p>
+                  <input type="submit" value="Submit" />
+              </form>
+          </div>
       </div>
     </div>
 
