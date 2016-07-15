@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-
+from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from mongoengine.django.auth import User
@@ -71,13 +71,14 @@ def signup(request):
                         user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                         auth_login(request, user)
                         request.session.set_expiry(60 * 60 * 1)
+                        return HttpResponseRedirect(reverse('index'))
                         return JsonResponse({'error': 'کاربر اضافه شد'})
 
                     return JsonResponse({'error': error})
 
             return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
         return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
-    data = request.GET
+    return render(request, 'sambalNews/login.html')
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
 @csrf_exempt
@@ -115,6 +116,7 @@ def login(request):
                     user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                     auth_login(request, user)
                     request.session.set_expiry(60 * 60 * 1)
+                    return HttpResponseRedirect(reverse('index'))
                     return JsonResponse({'error': 'کاربر وارد شد' + user.email})
                 return JsonResponse({'error': 'نام کاربری و ایمیل اشتباه است'})
             return JsonResponse({'error': 'رمز عبور خالی میباشد'})
