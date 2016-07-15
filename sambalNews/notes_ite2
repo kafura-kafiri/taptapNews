@@ -1,0 +1,4 @@
+nashod ba email login kard -> iraad ehtemaali .get()
+karbar baare aval khaarej mishavad vali baare dovom Request Method:	GET
+Request URL:	http://localhost:8000/accounts/login/?next=/sambalnews/logout
+be in miravad

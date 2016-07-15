@@ -1,0 +1,99 @@
+http://stackoverflow.com/questions/31990018/how-to-use-django-together-with-mongoengine
+https://api.mongodb.com/python/current/tutorial.html
+http://docs.mongoengine.org/guide/index.html
+http://mozaal.ir/%D8%AF%D8%A7%D9%86%D9%84%D9%88%D8%AF-%D9%85%D8%AC%D9%85%D9%88%D8%B9%D9%87-%DA%A9%D8%A7%D9%85%D9%84-%D8%A7%D9%87%D9%86%DA%AF-%D9%87%D8%A7%DB%8C-%D8%B3%D8%A7%D8%B3%DB%8C-%D9%85%D8%A7%D9%86%DA%A9%D9%86.html#
+http://stackoverflow.com/questions/25952145/django-mongoengine-unable-to-connect-to-mongodb
+
+i change c:\Programs\Python34\lib\site-packages\django\contrib\auth__init__.py
+to
+from mongoengine.django.auth import get_user
+class AuthenticationMiddleware(object):
+    def process_request(self, request):
+        assert hasattr(request, 'session'), (
+            "The Django authentication middleware requires session middleware "
+            "to be installed. Edit your MIDDLEWARE_CLASSES setting to insert "
+            "'django.contrib.sessions.middleware.SessionMiddleware' before "
+            "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+        )
+        request.user = SimpleLazyObject(lambda: get_user(_get_user_session_key(request)))
+
+from bson.objectid import ObjectId
+def _get_user_session_key(request):
+    # This value in the session is always serialized to a string, so we need
+    # to convert it back to Python whenever we access it.
+    if SESSION_KEY in request.session:
+        return ObjectId(request.session[SESSION_KEY])
+
+
+
+
+                    """
+                    if not error:
+                        connect('reborn') # todo
+                        User.create_user(username, password, email).save()
+                        hash_value = hashlib.sha1(username).hexdigest()
+                        Session
+                        send_mail(
+                            'تبریک',
+                            +
+                            'برای تکمیل ثبتنام کلیک کنید',
+                            'from@example.com',
+                            [email],
+                            fail_silently=False,
+                        )"""
+
+
+"""
+
+
+
+                except DoesNotExist:
+                    error = ''
+
+                        error += 'نام کاربری محرز نمی باشد'
+
+                        error += 'ایمل معتبر نمیباشد'
+                    if not error:
+                        connect('reborn')  # todo
+                        User.create_user(username, password, email).save()
+                        user = User.objects.get(username='bob')  # request.POST['username'])
+                        auth_login(request, user)
+                        request.session.set_expiry(60 * 60 * 1)
+                        return HttpResponseRedirect('http://khabarkon.com')
+
+                    return JsonResponse({'error': error})
+
+connect('reborn')
+try:
+        user = User.objects.get(username='bob')#request.POST['username'])
+        if user.check_password('bobpass'):#request.POST['password']):
+            user.backend = 'mongoengine.django.auth.MongoEngineBackend'
+            print(auth_login(request, user))
+            request.session.set_expiry(60 * 60 * 1) # 1 hour timeout
+            print("return")
+            return HttpResponse("LOGUEJAT")#redirect('index')
+        else:
+            print("malament")
+            messages.add_message(request,messages.ERROR,u"Incorrect login name or password !")
+    except DoesNotExist:
+        messages.add_message(request,messages.ERROR,u"Incorrect login name or password !")
+    return render(request, 'sambalNews/login.html', {})"""
+
+
+
+from mongoengine import connect
+
+db = connect('test')
+db.drop_database('test')
+
+
+db.getCollectionNames().forEach(function(collection) {
+   indexes = db[collection].getIndexes();
+   print("Indexes for " + collection + ":");
+   printjson(indexes);
+});
+
+news 5788d9703668555273b7e4b1
+summary 5788d9703668555273b7e4b0
+
+execfile('/home/pouriya/PycharmProjects/taptapN/shell.py')

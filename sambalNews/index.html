@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<form enctype="multipart/form-data" id="myform" method="post" action="">
+<input type="file" name="image" id="image" />
+... (other input tags)
+<button type="submit" id="upload">Upload</button>
+</form>
+<script>
+$('#upload').bind("click",function(event) {
+    event.preventDefault();
+    var json = JSON.stringify(canvas.toDatalessObject());
+    var url = ;
+    var data = new FormData($('#myform')[0]);
+    var dataString = JSON.stringify(data.serializeObject());
+    $.post(url, { json: json, data: dataString }, 'json');
+});</script>
+</body>
+</html>

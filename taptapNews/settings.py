@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import mongoengine
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sambalNews.apps.SambalnewsConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -75,12 +77,21 @@ WSGI_APPLICATION = 'taptapNews.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}"""
+
+DATABASES = {
+    'default': {
+    'ENGINE': 'django.db.backends.dummy',
+  }
 }
+
+#  from mongoengine import connect
+#  connect('employeedb') #  , username='my_username', password='secret_password')
 
 
 # Password validation
@@ -120,3 +131,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# mongodb session tracking
+
+#  SESSION_ENGINE = 'mongoengine.django.sessions'
+#  SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+
+
+# Mongodb settings
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend',
+)
+
+MONGO_DATABASE_NAME = 'test_1'
+
+
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+
+SESSION_ENGINE = 'mongoengine.django.sessions'
+SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+
+from mongoengine import connect
+connect(MONGO_DATABASE_NAME)
