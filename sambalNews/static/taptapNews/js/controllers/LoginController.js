@@ -1,7 +1,7 @@
 
- app.controller('LoginController', ['$scope', function($scope) {
+
+ app.controller('LoginController', ['$scope', function($scope, $http) {
           $scope.login = function (username,password) {
-           // use $.param jQuery function to serialize data from JSON
             var data = $.param(
                 {
                     data: {
