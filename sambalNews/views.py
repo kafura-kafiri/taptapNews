@@ -150,7 +150,7 @@ def create_news(request):
                 #  return JsonResponse({'error': str(news.id)})
                 return JsonResponse({'error': 'خبر افزوده شد'})
         return JsonResponse({'error': 'اطلاعات کافی نیست'})
-    return render(request, 'sambalNews/add_news.html', {})
+    return render(request, 'sambalNews/admin.html', {})
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
 @login_required
