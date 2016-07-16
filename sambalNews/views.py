@@ -248,6 +248,8 @@ def condid_search(date, cnt=10):
 def unofficials(date, cnt=10):
     return Summary.objects(is_valid=False).filter(publish_date__lte=date).order_by('-date')[:cnt]
 
+
+@login_required
 @csrf_exempt
 def next(request):
     if request.method == 'POST':
@@ -259,7 +261,10 @@ def next(request):
         if 'data' in request.POST:
             data = request.POST['data']
             data = json.loads(data)"""
-            if 'query' in data:
+            """if 'query' in data:"""
+            if 'data' in request.POST:
+                data = request.POST['data']
+                data = json.loads(data)
                 query = data['query']
                 date = datetime.datetime.now()
                 if 'date' in data:

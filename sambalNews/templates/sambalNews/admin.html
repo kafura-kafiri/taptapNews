@@ -17,10 +17,30 @@
         <h1>Login</h1>
       </div>
     </div>
-
     <div class="main" ng-controller="AdminController">
         <div id="errors">{{ ResponseDetails }}</div>
       <div class="container">
+          <div class="commentbox">
+              <h2>Add News:</h2>
+              <form ng-submit="addNews(title,source,category,tags,summary,text)">
+                  <p>title:
+                      <input type="text" name="title" ng-model="title" /></p>
+                  <p>source:
+                      <input type="text" name="source" ng-model="source" /></p>
+                  <p>category:
+                      <input type="text" name="category" ng-model="category" /></p>
+                  <p>tags:
+                      <input type="text" name="tags" ng-model="tags" /></p>
+                  <p>summary:
+                      <input type="text" name="summary" ng-model="summary" /></p>
+                  <p>text:
+                      <input type="text" name="text" ng-model="text" /></p>
+                  <p>text:
+                      <input type="file" id="file" name="file"/></p>
+
+                  <input type="submit" value="Submit" />
+              </form>
+          </div>
           <div class="commentbox">
               <h2>Block:</h2>
               <form ng-submit="block(username)">
