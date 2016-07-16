@@ -64,5 +64,62 @@
                     "<hr />config: " + config;
             });
             };
+        $scope.deleteNews = function(news_id) {
+            var data = $.param({});
+
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            };
+              $http.post('/sambalNews/delete_news/'+news_id, data, config)
+                .success(function (data, status, headers, config) {
+                    $scope.ResponseDetails = data;
+            })
+            .error(function (data, status, header, config) {
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+            };
+             $scope.validate = function(news_id) {
+            var data = $.param({});
+
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            };
+              $http.post('/sambalNews/validate/'+news_id, data, config)
+                .success(function (data, status, headers, config) {
+                    $scope.ResponseDetails = data;
+            })
+            .error(function (data, status, header, config) {
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+            };
+     $scope.upgrade = function(code) {
+            var data = $.param({});
+
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            };
+              $http.post('/sambalNews/upgrade_user/'+code, data, config)
+                .success(function (data, status, headers, config) {
+                    $scope.ResponseDetails = data;
+            })
+            .error(function (data, status, header, config) {
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+            });
+            };
         }
 ]);

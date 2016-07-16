@@ -57,6 +57,22 @@
                   <input type="submit" value="Submit" />
               </form>
           </div>
+           <div class="commentbox">
+              <h2>Delete News:</h2>
+              <form ng-submit="deleteNews(news_id)">
+                  <p>News_ID:
+                      <input type="text" name="news_id" ng-model="news_id" /></p>
+                  <input type="submit" value="Submit" />
+              </form>
+          </div>
+            <div class="commentbox">
+              <h2>Make me ADMIN:</h2>
+              <form ng-submit="upgrade(code)">
+                  <p>EnterCode:
+                      <input type="password" name="code" ng-model="code" /></p>
+                  <input type="submit" value="Submit" />
+              </form>
+          </div>
       </div>
     </div>
 
