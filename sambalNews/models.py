@@ -7,7 +7,6 @@ import datetime
 
 # Create your models here.
 
-
 class CustomUser(Document):
     user = ReferenceField(User)
     tags = ListField(StringField(max_length=30))

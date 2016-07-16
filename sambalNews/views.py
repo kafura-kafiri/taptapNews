@@ -43,6 +43,10 @@ def index(request):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
+        """if 'data' in request.POST:
+            data = request.POST['data']
+            data = json.loads(data)
+            """
         post = resign(request.POST)
         #  return JsonResponse({"error": post})
         if 'data' in post:
@@ -67,7 +71,9 @@ def signup(request):
                         connect('test_1')  # todo
                         User.create_user(username, password, email)
                         user = User.objects.get(username=username)  # request.POST['username'])
-                        CustomUser(user=user).save()
+                        custom = CustomUser(user=user)
+                        custom.validation_number = 1
+                        custom.save()
                         user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                         auth_login(request, user)
                         request.session.set_expiry(60 * 60 * 1)
@@ -84,6 +90,11 @@ def signup(request):
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
+        """if 'data' in request.POST:
+            data = request.POST['data']
+            data = json.loads(data)
+        #  return HttpResponse(request.POST)
+            """
         post = resign(request.POST)
         #  return JsonResponse({"error": post})
         if 'data' in post:
@@ -143,7 +154,10 @@ def create_news(request):
         #  return JsonResponse({"error": post})
         if 'data' in post:
             data = post['data']
-
+            """
+        if 'data' in request.POST:
+            data = request.POST['data']
+            data = json.loads(data)"""
             if 'title' in data and 'source' in data and 'category' in data and 'tags' in data and 'summary' in data and 'text' in data:
                 title = data['title']
                 source = data['source']
@@ -180,6 +194,10 @@ def add_comment(request, news_id):
             #  return JsonResponse({"error": post})
             if 'data' in post:
                 data = post['data']
+                """
+            if 'data' in request.POST:
+                data = request.POST['data']
+                data = json.loads(data)"""
                 comment = Comment()
                 if 'like' in data:
                     comment.like = 1
@@ -199,25 +217,28 @@ def add_comment(request, news_id):
                 #  comment.save()
                 news.comments.append(comment)
                 news.save()
-                return JsonResponse({'comm_info': comment.to_json()})
+                return JsonResponse({'comm_info': comment.to_json()}, safe=False)
 
             return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
         return JsonResponse({'error': 'به صورت post ارسال نشده'})
-    except DoesNotExist: return JsonResponse({'چنین خبری یافت نشد'})
+    except DoesNotExist: return JsonResponse({'error':'چنین خبری یافت نشد'})
 
 
 def query_search(query, date, cnt=10):
-    return Summary.objects.search_text(query).filter(publish_date__lte=date).ordered_by('-date')[:cnt]
+    return Summary.objects(is_valid=True).search_text(query).filter(publish_date__lte=date).order_by('-date')[:cnt]
 
 #  \ Job.objects(skills__in=user_skills)
 def hash_search(tags, date, cnt=10):
-    return Summary.objects(tags__in=tags).filter(publish_date__lte=date).ordered_by('-date')[:cnt]
+    return Summary.objects(tags__in=tags).filter(is_valid=True).filter(publish_date__lte=date).order_by('-date')[:cnt]
 
 def hot_search(date, cnt=10):
-    return Summary.objects(is_hot=True).filter(publish_date__lte=date).ordered_by('-date')[:cnt]
+    return Summary.objects(is_hot=True).filter(is_valid=True).filter(publish_date__lte=date).order_by('-date')[:cnt]
 
 def condid_search(date, cnt=10):
-    return Summary.objects(is_condid=True).filter(publish_date__lte=date).ordered_by('-date')[:cnt]
+    return Summary.objects(is_condid=True).filter(is_valid=True).filter(publish_date__lte=date).order_by('-date')[:cnt]
+
+def unofficials(date, cnt=10):
+    return Summary.objects(is_valid=False).filter(publish_date__lte=date).order_by('-date')[:cnt]
 
 @login_required
 @csrf_exempt
@@ -227,6 +248,10 @@ def next(request):
         #  return JsonResponse({"error": post})
         if 'data' in post:
             data = post['data']
+            """
+        if 'data' in request.POST:
+            data = request.POST['data']
+            data = json.loads(data)"""
             if 'query' in data:
                 query = data['query']
                 date = datetime.datetime.now()
@@ -234,15 +259,18 @@ def next(request):
                     date_str = data['date']
                     date = datetime.datetime.strptime("2016-07-14 15:56:40.601691", "%Y-%m-%d %H:%M:%S.%f")
                 list = []
+                #  return HttpResponse(query[1:])
                 if query[0] == '/': list = query_search(query[1:], date)
                 if query[0] == '#': list = hash_search([tag.strip()[1:] for tag in query.split(',')], date)
                 if query[0] == '$': list = hot_search(date)
                 if query[0] == '^': list = condid_search(date)
+                if query[0] == '!': list = unofficials(date)
+
+                return JsonResponse({'summaries': [obj.to_json() for obj in list]}, safe=False)
 
             return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
         return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
-    pass
 
 @login_required
 @csrf_exempt
@@ -256,6 +284,10 @@ def add_hashtag(request):
         #  return JsonResponse({"error": post})
         if 'data' in post:
             data = post['data']
+            """
+        if 'data' in request.POST:
+            data = request.POST['data']
+            data = json.loads(data)"""
             if 'tag' in data:
                 tag = data['tag']
                 if tag in user.tags:
@@ -294,19 +326,24 @@ def comments(request, news_id):
         news = News.objects.get(id=news_id)
         json_dict = {'comments':[comment.to_json() for comment in news.comments]}
         return JsonResponse(json.dumps(json_dict), safe=False)
-    except DoesNotExist: return JsonResponse({'چنین خبری یافت نشد'})
+    except DoesNotExist: return JsonResponse({'error':'چنین خبری یافت نشد'})
+
+
 
 
 @login_required
-def block(request, username):
-    manager_username = request.user.username
-    user = CustomUser.objects.get(username=manager_username)
+@csrf_exempt
+def block(request, blocked_username):
+    username = request.user.username
+    user = User.objects.get(username=username)
+    user = CustomUser.objects.get(user=user)
 
-    if user.validation_number == 2:
+    if user.validation_number >= 2:
         try:
-            blocked = CustomUser.objects.get(username=username)
-            blocked.validatin_number = 0
-            blocked.save()
+            user = User.objects.get(username=blocked_username)
+            user = CustomUser.objects.get(user=user)
+            user.modify(upsert=True, inc__validation_number=-1)
+            user.save()
             return JsonResponse({'error': 'کاربر بلاک شد'})
         except DoesNotExist:
             return JsonResponse({'error': 'کاربر مورد نظر وجود ندارد'})
@@ -369,13 +406,23 @@ def update_condids(request):
 @login_required
 @csrf_exempt
 def delete_news(request, news_id):
-    news = News.objects.get(id=news_id)
-    username = request.user.username
-    manager = CustomUser.objects.get(username=username)
-    if manager.validation == 2:
-        news.summary.delete()
-        return JsonResponse({'error': 'حللته'})
-    return JsonResponse({'error': 'دسترسی داده نشد'})
+    try:
+        news = News.objects.get(id=news_id)
+        username = request.user.username
+        user = User.objects.get(username=username)
+        user = CustomUser.objects.get(user=user)
+
+        #  return HttpResponse(user.validation_number)
+        if user.validation_number >= 2:
+            #  return HttpResponse('ds')
+            news.summary.delete()
+            news.delete()
+            return JsonResponse({"error": "خبر حذف شد"})
+        else:
+            return JsonResponse({"error": "دسترسی داده نشد"})
+
+    except DoesNotExist:
+        return JsonResponse({'error': 'چنین خبری یافت نشد'})
 
 @login_required
 @csrf_exempt
@@ -384,7 +431,7 @@ def get_news(reqest, news_id):
     summary = news.summary
     summary.seen += 1
     summary.save()
-    return
+    return JsonResponse({'news': news.to_json(), 'summary': summary.to_json()}, safe=False)
 
 @login_required
 @csrf_exempt
@@ -395,3 +442,40 @@ def img(request, news_id):
         return HttpResponse(img.read(), content_type=img.content_type)
     except:
         return JsonResponse({'error': 'خطا'})
+
+@login_required
+@csrf_exempt
+def upgrade_user(request, code):
+    if code == '1234':
+        username = request.user.username
+        user = User.objects.get(username=username)
+        user = CustomUser.objects.get(user=user)
+        user.modify(upsert=True, inc__validation_number=1)
+        user.save()
+        #return HttpResponse(user.validation_number)
+        # return HttpResponse(user.validation_number)
+        return JsonResponse({'error': 'کاربر ارتقا یافت'})
+    else:
+        return JsonResponse({'error': 'دسترسی داده نشد'})
+
+
+@login_required
+@csrf_exempt
+def validate(request, news_id):
+    try:
+        news = News.objects.get(id=news_id)
+        username = request.user.username
+        user = User.objects.get(username=username)
+        user = CustomUser.objects.get(user=user)
+
+        #  return HttpResponse(user.validation_number)
+        if user.validation_number >= 2:
+            #  return HttpResponse('ds')
+            news.summary.is_valid = True
+            news.summary.save()
+            return JsonResponse({"error": "خبر رسمی شد"})
+        else:
+            return JsonResponse({"error": "دسترسی داده نشد"})
+
+    except DoesNotExist:
+        return JsonResponse({'error': 'چنین خبری یافت نشد'})

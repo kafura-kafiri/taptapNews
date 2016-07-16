@@ -26,6 +26,7 @@ for i in range(1000):
     summary.tags = produce_list(2, tags)
     summary.is_hot = True if random() < .5 else False
     summary.is_condid = True if random() < .5 else False
+    summary.is_valid = True if random() < .5 else False
     d = randint(1, 26)
     m = randint(1, 12)
     date = datetime.datetime.strptime("2016-" + str(m) + "-" + str(d) + " 15:56:40.601691", "%Y-%m-%d %H:%M:%S.%f")
