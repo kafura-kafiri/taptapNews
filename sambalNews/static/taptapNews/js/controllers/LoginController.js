@@ -1,6 +1,6 @@
 
 
- app.controller('LoginController', ['$scope','$http', function($scope,$http,$window) {
+ app.controller('LoginController', ['$scope','$http', function($scope,$http) {
           $scope.login = function (username,password) {
             var data = $.param(
                 {
@@ -19,7 +19,7 @@
 
               $http.post('/sambalNews/login/', data, config)
                 .success(function (data, status, headers, config) {
-                    if(data.indexOf("MainController")>-1){
+                    if(data.length>50){
                         $scope.ResponseDetails = "http://127.0.0.1:8000/sambalNews/index";
                     }
                     else

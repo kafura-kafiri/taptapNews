@@ -248,7 +248,6 @@ def condid_search(date, cnt=10):
 def unofficials(date, cnt=10):
     return Summary.objects(is_valid=False).filter(publish_date__lte=date).order_by('-date')[:cnt]
 
-@login_required
 @csrf_exempt
 def next(request):
     if request.method == 'POST':
@@ -277,7 +276,7 @@ def next(request):
                 return JsonResponse({'summaries': [obj.to_json() for obj in list]}, safe=False)
 
             return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
-        return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
+        return JsonResponse({'error': 'اطلاعات کافی نمیباشد تک دیتا'})
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
 @login_required
@@ -305,7 +304,7 @@ def add_hashtag(request):
                 user.tags.append(tag)
                 user.save()
                 #  return JsonResponse({'ino': user.tags})
-                return JsonResponse({'error': 'تگ اضافه شد'})
+                return JsonResponse({'data': 'تگ اضافه شد'})
             return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
         return JsonResponse({'error': 'اطلاعات کافی نمیباشد'})
     return JsonResponse({'error': 'به صورت post ارسال نشده'})

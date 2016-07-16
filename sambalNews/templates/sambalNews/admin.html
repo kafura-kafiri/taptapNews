@@ -1,13 +1,15 @@
  
 <!doctype html>
 <html>
-  <head>
-      <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/css.css" rel='stylesheet' type='text/css'>
-    <link href="css/main.css" rel="stylesheet" />
-
-    <script src="js/shared/angular.min.js"></script>
+    <head>
+    {% load staticfiles %}
+    <link href="{% static "taptapNews/css/bootstrap.min.css" %}" rel="stylesheet" />
+    <link href="{% static "taptapNews/css/css.css" %}" rel='stylesheet' type='text/css'>
+    <link href="{% static "taptapNews/css/main.css" %}" rel="stylesheet" />
+    <script src="{% static "taptapNews/js/shared/angular.min.js" %}" ></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   </head>
+   {% verbatim %}
   <body ng-app="myApp">
   
     <div class="header">
@@ -17,6 +19,7 @@
     </div>
 
     <div class="main" ng-controller="AdminController">
+        <div id="errors">{{ ResponseDetails }}</div>
       <div class="container">
           <div class="commentbox">
               <h2>Block:</h2>
@@ -26,14 +29,22 @@
                   <input type="submit" value="Submit" />
               </form>
           </div>
-        
+          <div class="commentbox">
+              <h2>Add Hashtag:</h2>
+              <form ng-submit="addHashtag(hashtag)">
+                  <p>Hashtag:
+                      <input type="text" name="hashtag" ng-model="hashtag" /></p>
+                  <input type="submit" value="Submit" />
+              </form>
+          </div>
       </div>
     </div>
 
 
-    <!-- Modules -->
-    <script src="js/app.js"></script>
+ {% endverbatim %}
+    {% load staticfiles %}
+    <script src="{% static "taptapNews/js/app.js" %}"></script>
     <!-- Controllers -->
-    <script src="js/controllers/AdminController.js"></script>
+    <script src="{% static "taptapNews/js/controllers/AdminController.js" %}"></script>
   </body>
 </html>
