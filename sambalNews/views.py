@@ -40,6 +40,11 @@ def index(request):
     return render(request, 'sambalNews/index.html', {})
 
 
+@login_required
+@csrf_exempt
+def admin(request):
+    return render(request, 'sambalNews/admin.html', {})
+
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
@@ -127,6 +132,9 @@ def login(request):
                     user.backend = 'mongoengine.django.auth.MongoEngineBackend'
                     auth_login(request, user)
                     request.session.set_expiry(60 * 60 * 1)
+                    custom = CustomUser.objects.get(user=user)
+                    if custom.validation_number >= 2:
+                        return HttpResponseRedirect(reverse('admin'))
                     return HttpResponseRedirect(reverse('index'))
                     return JsonResponse({'error': 'کاربر وارد شد' + user.email})
                 return JsonResponse({'error': 'نام کاربری و ایمیل اشتباه است'})
