@@ -140,7 +140,7 @@ def login(request):
                 return JsonResponse({'error': 'نام کاربری و ایمیل اشتباه است'})
             return JsonResponse({'error': 'رمز عبور خالی میباشد'})
         return JsonResponse({'error': 'صفت داده وجود ندارد'})
-    return render({'error': 'http://localhost:8080/sambalNews/index'})
+    return JsonResponse({'error': 'http://localhost:8080/sambalNews/index'})
     return JsonResponse({'error': 'به صورت post ارسال نشده'})
 
 
