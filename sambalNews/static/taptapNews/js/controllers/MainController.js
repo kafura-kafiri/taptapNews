@@ -3,7 +3,7 @@
   	{ 
     	name: 'The Book of Trees',
     	pubdate: new Date('2014', '03', '08'), 
-    	cover: 'img/the-book-of-trees.jpg',
+    	cover: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Book_Collage.png/320px-Book_Collage.png',
         source:'iinnjaaa',
     	likes: 0,
         dislikes: 0,
@@ -15,7 +15,7 @@
   	{ 
     	name: 'Program or be Programmed', 
     	pubdate: new Date('2013', '08', '01'), 
-    	cover: 'img/program-or-be-programmed.jpg',
+    	cover: 'https://upload.wikimedia.org/wikipedia/en/8/80/Wicked_Witch_of_the_West_W.W._Denslow.jpg',
         source:'iinnjaaa',
     	likes: 0 ,
         dislikes: 0,
